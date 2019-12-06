@@ -1,6 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { ConfigService } from './config.service';
 import { EnvConfig } from './models/env-config.model';
+import { ValidationError } from 'class-validator';
 
 describe('ConfigService', () => {
   const initService = async (config: any): Promise<ConfigService> => {
@@ -42,5 +43,21 @@ describe('ConfigService', () => {
     result.jsonplaceholderTimeout = parseInt(env.JSONPLACEHOLDER_TIMEOUT, 10);
     result.jsonplaceholderUrl = env.JSONPLACEHOLDER_URL;
     expect(service.envConfig).toEqual(result);
+  });
+
+  it('should throw err on env is invalid', async () => {
+    const env = {
+      JSONPLACEHOLDER_URL: 'opa, estou com erro',
+      JSONPLACEHOLDER_TIMEOUT: '300',
+    };
+
+    let capturedErr;
+    try {
+      await initService(env);
+    } catch (err) {
+      capturedErr = err;
+    }
+
+    expect(capturedErr).toBeInstanceOf(ValidationError);
   });
 });
