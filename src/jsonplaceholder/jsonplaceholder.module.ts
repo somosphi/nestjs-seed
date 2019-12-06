@@ -7,11 +7,11 @@ import { ConfigService } from 'src/config/config.service';
   imports: [
     HttpModule.registerAsync({
       imports: [ConfigModule],
-      useFactory: async (configService: ConfigService) => ({
+      inject: [ConfigService],
+      useFactory: (configService: ConfigService) => ({
         timeout: configService.envConfig.jsonplaceholderTimeout,
         baseURL: configService.envConfig.jsonplaceholderUrl,
       }),
-      inject: [ConfigService],
     }),
   ],
   providers: [JsonplaceholderService],

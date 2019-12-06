@@ -8,4 +8,20 @@ export class EnvConfig {
   @IsNumber()
   @IsPositive()
   jsonplaceholderTimeout: number;
+
+  @IsString()
+  mysqlHost: string;
+
+  @IsNumber()
+  @IsPositive()
+  mysqlPort: number;
+
+  @IsString()
+  mysqlUsername: string;
+
+  @IsString()
+  mysqlPassword: string;
+
+  @IsString()
+  mysqlDatabase: string;
 }

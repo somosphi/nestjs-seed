@@ -4,6 +4,16 @@ import { EnvConfig } from './models/env-config.model';
 import { ValidationError } from 'class-validator';
 
 describe('ConfigService', () => {
+  const defaultEnv = {
+    JSONPLACEHOLDER_URL: 'http://localhost.com/jsonplaceholder-test',
+    JSONPLACEHOLDER_TIMEOUT: '300',
+    MYSQL_HOST: 'localhost',
+    MYSQL_PORT: '33O6',
+    MYSQL_DATABASE: 'seed_nest',
+    MYSQL_USERNAME: 'root',
+    MYSQL_PASSWORD: '1234fudh23',
+  };
+
   const initService = async (config: any): Promise<ConfigService> => {
     class ConfigServiceTestable extends ConfigService {
       protected readEnv(filepath: string) {
@@ -24,31 +34,31 @@ describe('ConfigService', () => {
   };
 
   it('should be defined', async () => {
-    const env = {
-      JSONPLACEHOLDER_URL: 'http://localhost.com/jsonplaceholder-test',
-      JSONPLACEHOLDER_TIMEOUT: '300',
-    };
-    expect(await initService(env)).toBeDefined();
+    expect(await initService(defaultEnv)).toBeDefined();
   });
 
   it('should set formatted env in envConfig property', async () => {
-    const env = {
-      JSONPLACEHOLDER_URL: 'http://localhost.com/jsonplaceholder-test',
-      JSONPLACEHOLDER_TIMEOUT: '300',
-    };
-
-    const service = await initService(env);
+    const service = await initService(defaultEnv);
 
     const result = new EnvConfig();
-    result.jsonplaceholderTimeout = parseInt(env.JSONPLACEHOLDER_TIMEOUT, 10);
-    result.jsonplaceholderUrl = env.JSONPLACEHOLDER_URL;
+    result.jsonplaceholderTimeout = parseInt(
+      defaultEnv.JSONPLACEHOLDER_TIMEOUT,
+      10,
+    );
+    result.jsonplaceholderUrl = defaultEnv.JSONPLACEHOLDER_URL;
+    result.mysqlDatabase = defaultEnv.MYSQL_DATABASE;
+    result.mysqlHost = defaultEnv.MYSQL_HOST;
+    result.mysqlPort = parseInt(defaultEnv.MYSQL_PORT, 10);
+    result.mysqlUsername = defaultEnv.MYSQL_USERNAME;
+    result.mysqlPassword = defaultEnv.MYSQL_PASSWORD;
+
     expect(service.envConfig).toEqual(result);
   });
 
   it('should throw err on env is invalid', async () => {
     const env = {
+      ...defaultEnv,
       JSONPLACEHOLDER_URL: 'opa, estou com erro',
-      JSONPLACEHOLDER_TIMEOUT: '300',
     };
 
     let capturedErr;
