@@ -9,8 +9,11 @@ export class ConfigService {
   readonly envConfig: EnvConfig;
 
   constructor(filePath: string) {
-    const config = dotenv.parse(fs.readFileSync(filePath));
-    this.envConfig = this.validateInput(config);
+    this.envConfig = this.validateInput(this.readEnv(filePath));
+  }
+
+  protected readEnv(filePath: string): any {
+    return dotenv.parse(fs.readFileSync(filePath));
   }
 
   private validateInput(config: any): EnvConfig {

@@ -4,19 +4,17 @@ import { EnvConfig } from './models/env-config.model';
 
 describe('ConfigService', () => {
   const initService = async (config: any): Promise<ConfigService> => {
-    jest.mock('fs', () => ({
-      readFileSync: '',
-    }));
-
-    jest.mock('dotenv', () => ({
-      parse: () => config,
-    }));
+    class ConfigServiceTestable extends ConfigService {
+      protected readEnv(filepath: string) {
+        return config;
+      }
+    }
 
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         {
           provide: ConfigService,
-          useValue: new ConfigService('.env'),
+          useValue: new ConfigServiceTestable('.env'),
         },
       ],
     }).compile();
