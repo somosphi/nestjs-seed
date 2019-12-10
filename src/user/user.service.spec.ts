@@ -47,7 +47,7 @@ describe('UserService', () => {
     });
 
     it('should throw user repository error when empty record', async () => {
-      const userId = 1;
+      const userId = '1';
       const err = new Error('OPS');
 
       jest.spyOn(repository, 'findOneOrFail').mockRejectedValue(err);
