@@ -1,7 +1,7 @@
 import { Module, HttpModule } from '@nestjs/common';
 import { JsonplaceholderService } from './jsonplaceholder.service';
-import { ConfigModule } from 'src/config/config.module';
-import { ConfigService } from 'src/config/config.service';
+import { ConfigModule } from '../config/config.module';
+import { ConfigService } from '../config/config.service';
 
 @Module({
   imports: [
@@ -15,5 +15,6 @@ import { ConfigService } from 'src/config/config.service';
     }),
   ],
   providers: [JsonplaceholderService],
+  exports: [JsonplaceholderService],
 })
 export class JsonplaceholderModule {}

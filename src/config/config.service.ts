@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common';
-import { validateSync } from 'class-validator';
-import * as dotenv from 'dotenv';
 import * as fs from 'fs';
-import { EnvConfig } from './models/env-config.model';
+import * as dotenv from 'dotenv';
+import { validateSync } from 'class-validator';
+import { ConfigEnv } from './config-env.model';
 
 @Injectable()
 export class ConfigService {
-  readonly envConfig: EnvConfig;
+  readonly envConfig: ConfigEnv;
 
   constructor(filePath: string) {
     this.envConfig = this.validateInput(this.readEnv(filePath));
@@ -16,8 +16,8 @@ export class ConfigService {
     return dotenv.parse(fs.readFileSync(filePath));
   }
 
-  protected initEnvConfig(config: any): EnvConfig {
-    const envConfig = new EnvConfig();
+  protected initEnvConfig(config: any): ConfigEnv {
+    const envConfig = new ConfigEnv();
     envConfig.jsonplaceholderUrl = config.JSONPLACEHOLDER_URL;
     envConfig.jsonplaceholderTimeout = parseInt(
       config.JSONPLACEHOLDER_TIMEOUT,
@@ -31,7 +31,7 @@ export class ConfigService {
     return envConfig;
   }
 
-  private validateInput(config: any): EnvConfig {
+  private validateInput(config: any): ConfigEnv {
     const envConfig = this.initEnvConfig(config);
     const errors = validateSync(envConfig);
 

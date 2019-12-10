@@ -1,9 +1,9 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import { JsonplaceholderService } from './jsonplaceholder.service';
 import { HttpModule, HttpService } from '@nestjs/common';
-import { JsonplaceholderUser } from './models/jsonplaceholder-user';
+import { Test, TestingModule } from '@nestjs/testing';
 import { AxiosResponse } from 'axios';
 import { of } from 'rxjs';
+import { JsonplaceholderService } from './jsonplaceholder.service';
+import { JsonplaceholderUser } from './jsonplaceholder-user.model';
 
 describe('JsonplaceholderService', () => {
   let service: JsonplaceholderService;
@@ -23,7 +23,7 @@ describe('JsonplaceholderService', () => {
     expect(service).toBeDefined();
   });
 
-  describe('#getUsers', () => {
+  describe('#findUsers', () => {
     it('should return users on call "GET /users" in http service', async () => {
       const result: AxiosResponse = {
         data: [{
@@ -40,7 +40,7 @@ describe('JsonplaceholderService', () => {
 
       jest.spyOn(httpService, 'get').mockImplementation(() => of(result));
 
-      expect(await service.getUsers())
+      expect(await service.findUsers())
         .toEqual(result.data.map(item => new JsonplaceholderUser(item)));
     });
 
@@ -55,7 +55,7 @@ describe('JsonplaceholderService', () => {
 
       jest.spyOn(httpService, 'get').mockImplementation(() => of(result));
 
-      expect(await service.getUsers()).toEqual([]);
+      expect(await service.findUsers()).toEqual([]);
     });
 
     it('should remove extra propertiers returned from api response data', async () => {
@@ -75,7 +75,7 @@ describe('JsonplaceholderService', () => {
 
       jest.spyOn(httpService, 'get').mockImplementation(() => of(result));
 
-      expect(await service.getUsers())
+      expect(await service.findUsers())
         .toEqual(result.data.map(item => new JsonplaceholderUser(item)));
     });
   });

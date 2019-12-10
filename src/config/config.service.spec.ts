@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { ConfigService } from './config.service';
-import { EnvConfig } from './models/env-config.model';
 import { ValidationError } from 'class-validator';
+import { ConfigService } from './config.service';
+import { ConfigEnv } from './config-env.model';
 
 describe('ConfigService', () => {
   const defaultEnv = {
@@ -40,7 +40,7 @@ describe('ConfigService', () => {
   it('should set formatted env in envConfig property', async () => {
     const service = await initService(defaultEnv);
 
-    const result = new EnvConfig();
+    const result = new ConfigEnv();
     result.jsonplaceholderTimeout = parseInt(
       defaultEnv.JSONPLACEHOLDER_TIMEOUT,
       10,

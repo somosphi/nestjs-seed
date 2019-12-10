@@ -1,15 +1,28 @@
 import { Injectable } from '@nestjs/common';
-import { UserServiceContract } from './contract/user.service';
-import { UserRepository } from './repository/user.repository';
+import { UserRepository } from './user.repository';
+import { JsonplaceholderService } from 'src/jsonplaceholder/jsonplaceholder.service';
 
 @Injectable()
-export class UserService implements UserServiceContract {
-  constructor(private readonly userRepository: UserRepository) {}
-  async fetch() {
-    //
+export class UserService {
+
+  constructor(
+    private readonly userRepository: UserRepository,
+    private readonly jsonplaceholderService: JsonplaceholderService,
+  ) {}
+
+  async fetch(): Promise<string[]> {
+    const externalUsers = await this.jsonplaceholderService.findUsers();
+    return await this.userRepository.insertIfNotExists(
+      externalUsers.map(externalUser => ({
+        externalId: externalUser.id.toString(),
+        username: externalUser.username,
+        name: externalUser.name,
+        emailAddress: externalUser.email,
+      })),
+    );
   }
 
-  findById(id: number) {
+  findByIdOrFail(id: string) {
     return this.userRepository.findOneOrFail(id);
   }
 

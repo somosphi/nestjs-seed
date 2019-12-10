@@ -1,6 +1,6 @@
 import { IsString, IsUrl, IsNumber, IsPositive } from 'class-validator';
 
-export class EnvConfig {
+export class ConfigEnv {
   @IsString()
   @IsUrl()
   jsonplaceholderUrl: string;

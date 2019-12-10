@@ -2,8 +2,10 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from './config/config.module';
 import { JsonplaceholderModule } from './jsonplaceholder/jsonplaceholder.module';
-import { UserModule } from './user/user.module';
 import { ConfigService } from './config/config.service';
+import { AppController } from './app.controller';
+import { UserModule } from './user/user.module';
+import { User } from './user/user.entity';
 
 @Module({
   imports: [
@@ -20,9 +22,11 @@ import { ConfigService } from './config/config.service';
         database: configService.envConfig.mysqlDatabase,
         username: configService.envConfig.mysqlUsername,
         password: configService.envConfig.mysqlPassword,
-        synchronize: false,
+        synchronize: true,
+        entities: [User],
       }),
     }),
   ],
+  controllers: [AppController],
 })
 export class AppModule {}
