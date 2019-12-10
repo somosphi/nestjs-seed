@@ -1,10 +1,9 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { UserRepository } from './user.repository';
 import { JsonplaceholderService } from 'src/jsonplaceholder/jsonplaceholder.service';
 
 @Injectable()
 export class UserService {
-
   constructor(
     private readonly userRepository: UserRepository,
     private readonly jsonplaceholderService: JsonplaceholderService,
@@ -22,8 +21,12 @@ export class UserService {
     );
   }
 
-  findByIdOrFail(id: string) {
-    return this.userRepository.findOneOrFail(id);
+  async findById(id: string) {
+    const user = await this.userRepository.findOne(id);
+    if (!user) {
+      throw new NotFoundException();
+    }
+    return user;
   }
 
   list() {

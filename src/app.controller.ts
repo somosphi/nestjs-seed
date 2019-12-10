@@ -5,18 +5,10 @@ import { UserService } from './user/user.service';
 
 @Controller('/app')
 export class AppController {
-  constructor(
-    private readonly configService: ConfigService,
-    private readonly jsonplaceholderService: JsonplaceholderService,
-  ) {}
+  constructor(private readonly configService: ConfigService) {}
 
   @Get('/config')
   test() {
     return this.configService.envConfig;
-  }
-
-  @Get('/jph')
-  jph() {
-    return this.jsonplaceholderService.findUsers();
   }
 }

@@ -13,6 +13,6 @@ export class UserController {
 
   @Get('/:id')
   async findOne(@Param('id') id): Promise<User> {
-    return this.userService.findByIdOrFail(id);
+    return await this.userService.findById(id);
   }
 }
