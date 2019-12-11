@@ -1,4 +1,4 @@
-import { IsString, IsUrl, IsNumber, IsPositive } from 'class-validator';
+import { IsString, IsUrl, IsNumber, IsPositive, IsOptional } from 'class-validator';
 
 export class ConfigEnv {
   @IsString()
@@ -24,4 +24,12 @@ export class ConfigEnv {
 
   @IsString()
   mysqlDatabase: string;
+
+  @IsString()
+  @IsOptional()
+  apmServiceName?: string;
+
+  @IsString()
+  @IsOptional()
+  apmServiceUrl?: string;
 }

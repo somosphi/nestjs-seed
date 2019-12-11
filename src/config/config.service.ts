@@ -28,6 +28,12 @@ export class ConfigService {
     envConfig.mysqlDatabase = config.MYSQL_DATABASE;
     envConfig.mysqlUsername = config.MYSQL_USERNAME;
     envConfig.mysqlPassword = config.MYSQL_PASSWORD;
+    if (config.APM_SERVICE_NAME) {
+      envConfig.apmServiceName = config.APM_SERVICE_NAME;
+    }
+    if (config.APM_SERVICE_URL) {
+      envConfig.apmServiceUrl = config.APM_SERVICE_URL;
+    }
     return envConfig;
   }
 

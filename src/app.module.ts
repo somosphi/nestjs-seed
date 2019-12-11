@@ -6,9 +6,11 @@ import { ConfigService } from './config/config.service';
 import { AppController } from './app.controller';
 import { UserModule } from './user/user.module';
 import { User } from './user/user.entity';
+import { ApmModule } from './apm/apm.module';
 
 @Module({
   imports: [
+    ApmModule,
     JsonplaceholderModule,
     ConfigModule,
     UserModule,
@@ -26,6 +28,7 @@ import { User } from './user/user.entity';
         entities: [User],
       }),
     }),
+    ApmModule,
   ],
   controllers: [AppController],
 })
