@@ -6,7 +6,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
     // logger: Logger,
   });
-  app.useGlobalFilters(new AllExceptionsFilter());
+ // app.useGlobalFilters(new AllExceptionsFilter());
   await app.listen(3000);
 }
 
