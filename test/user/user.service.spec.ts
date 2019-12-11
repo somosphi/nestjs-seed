@@ -9,8 +9,6 @@ describe('UserService', () => {
   let repository: UserRepository;
 
   beforeEach(async () => {
-    // tslint:disable-next-line:no-console
-    console.log('kk');
     const module: TestingModule = await Test.createTestingModule({
       imports: [],
       providers: [UserService, UserRepository],

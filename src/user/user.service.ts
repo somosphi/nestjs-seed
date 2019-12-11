@@ -1,6 +1,7 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { UserRepository } from './user.repository';
 import { JsonplaceholderService } from 'src/jsonplaceholder/jsonplaceholder.service';
+import { InvalidExternalIdException } from './exception';
 
 @Injectable()
 export class UserService {
@@ -27,5 +28,22 @@ export class UserService {
 
   list() {
     return this.userRepository.find();
+  }
+
+  async fetchUser(id: string): Promise<string[]> {
+    const externalUser = await this.jsonplaceholderService.findUser(id);
+
+    if (!externalUser) {
+      throw new InvalidExternalIdException();
+    }
+
+    return await this.userRepository.insertIfNotExists([
+      {
+        externalId: externalUser.id.toString(),
+        username: externalUser.username,
+        name: externalUser.name,
+        emailAddress: externalUser.email,
+      },
+    ]);
   }
 }

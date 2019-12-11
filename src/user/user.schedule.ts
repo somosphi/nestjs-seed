@@ -4,10 +4,7 @@ import { UserService } from './user.service';
 
 @Injectable()
 export class UserSchedule extends NestSchedule {
-
-  constructor(
-    private readonly userService: UserService,
-  ) {
+  constructor(private readonly userService: UserService) {
     super();
   }
 
