@@ -21,12 +21,8 @@ export class UserService {
     );
   }
 
-  async findById(id: string) {
-    const user = await this.userRepository.findOne(id);
-    if (!user) {
-      throw new NotFoundException();
-    }
-    return user;
+  findById(id: string) {
+    return this.userRepository.findOne(id);
   }
 
   list() {

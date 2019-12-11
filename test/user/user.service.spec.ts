@@ -1,8 +1,8 @@
 import momentTimezone from 'moment-timezone';
 import { Test, TestingModule } from '@nestjs/testing';
-import { UserService } from './user.service';
-import { UserRepository } from './user.repository';
-import { User } from './user.entity';
+import { UserService } from 'src/user/user.service';
+import { UserRepository } from 'src/user/user.repository';
+import { User } from 'src/user/user.entity';
 
 describe('UserService', () => {
   let service: UserService;
@@ -40,7 +40,7 @@ describe('UserService', () => {
         .spyOn(repository, 'findOneOrFail')
         .mockImplementation(async () => user);
 
-      const result = await service.findByIdOrFail(user.id);
+      const result = await service.findById(user.id);
 
       expect(result).toBe(user);
       expect(repository.findOneOrFail).toBeCalledWith(user.id);
@@ -54,7 +54,7 @@ describe('UserService', () => {
 
       let capturedErr: Error;
       try {
-        await service.findByIdOrFail(userId);
+        await service.findById(userId);
       } catch (err) {
         capturedErr = err;
       }
