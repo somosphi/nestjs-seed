@@ -1,9 +1,12 @@
 import { Injectable, HttpService } from '@nestjs/common';
 import { JsonplaceholderUser } from './jsonplaceholder-user.model';
+import { HttpIntegrationService } from 'src/shared/http-integration.service';
 
 @Injectable()
-export class JsonplaceholderService {
-  constructor(private readonly httpService: HttpService) {}
+export class JsonplaceholderService extends HttpIntegrationService {
+  constructor(private readonly httpService: HttpService) {
+    super();
+  }
 
   async findUsers(): Promise<JsonplaceholderUser[]> {
     const response = await this.httpService.get<any[]>('/users').toPromise();
@@ -15,15 +18,12 @@ export class JsonplaceholderService {
       const response = await this.httpService
         .get<any>(`/users/${id}`)
         .toPromise();
-
       return new JsonplaceholderUser(response.data);
-    } catch (error) {
-      const errorStatus = error.response && error.response.status;
-      if (errorStatus === 404) {
+    } catch (err) {
+      if (this.isNotFoundError(err)) {
         return null;
       }
-
-      throw error;
+      throw err;
     }
   }
 }
