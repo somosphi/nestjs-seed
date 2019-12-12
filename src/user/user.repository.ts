@@ -6,8 +6,6 @@ import {
   TransactionRepository,
 } from 'typeorm';
 import { User } from 'src/user/entity/user.entity';
-import { UserHistoryMethod } from './enum';
-import { UserHistory } from './entity/user-history.entity';
 
 @EntityRepository(User)
 export class UserRepository extends Repository<User> {
