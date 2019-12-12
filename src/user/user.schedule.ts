@@ -16,9 +16,7 @@ export class UserSchedule extends NestSchedule {
   async runFetch() {
     try {
       const fetchedIds = await this.userService.fetch();
-      if (fetchedIds.length) {
-        this.logger.log(`Successfully fetched users [${fetchedIds.join(', ')}]`);
-      }
+      this.logger.log(`Successfully fetched users [${fetchedIds.join(', ')}]`);
     } catch (err) {
       this.logger.error(`Failed to fetch users (${err.stack})`);
     }

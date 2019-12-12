@@ -12,7 +12,7 @@ export class UserService {
 
   async fetch(): Promise<string[]> {
     const externalUsers = await this.jsonplaceholderService.findUsers();
-    return await this.userRepository.insertIfNotExists(
+    return await this.userRepository.syncByExternalIds(
       externalUsers.map(externalUser => ({
         externalId: externalUser.id.toString(),
         username: externalUser.username,
@@ -30,14 +30,12 @@ export class UserService {
     return this.userRepository.find();
   }
 
-  async fetchUser(id: string): Promise<string[]> {
+  async fetchById(id: string): Promise<string[]> {
     const externalUser = await this.jsonplaceholderService.findUser(id);
-
     if (!externalUser) {
       throw new InvalidExternalIdException();
     }
-
-    return await this.userRepository.insertIfNotExists([
+    return await this.userRepository.syncByExternalIds([
       {
         externalId: externalUser.id.toString(),
         username: externalUser.username,

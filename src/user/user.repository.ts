@@ -16,7 +16,7 @@ export class UserRepository extends Repository<User> {
   }
 
   @Transaction()
-  async insertIfNotExists(
+  async syncByExternalIds(
     records: Array<Partial<User>>,
     @TransactionRepository() repository?: UserRepository,
   ): Promise<string[]> {
@@ -30,7 +30,10 @@ export class UserRepository extends Repository<User> {
           user => user.externalId === record.externalId,
         );
 
-        if (!actualUser) {
+        if (actualUser) {
+          await repository.update(actualUser.id, record);
+          fetchedIds.push(actualUser.id);
+        } else {
           const result = await repository.insert(record);
           fetchedIds.push(result.identifiers.pop().id);
         }

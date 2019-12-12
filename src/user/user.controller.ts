@@ -36,6 +36,6 @@ export class UserController {
   @Post('/fetch')
   @HttpCode(HttpStatus.NO_CONTENT)
   async fetch(@Body() fetchUserDto: FetchUserDto) {
-    await this.userService.fetchUser(fetchUserDto.externalId);
+    await this.userService.fetchById(fetchUserDto.externalId);
   }
 }
