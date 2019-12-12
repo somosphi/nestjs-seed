@@ -1,6 +1,7 @@
 import { Injectable, OnModuleInit, Logger } from '@nestjs/common';
 import elasticApmNode from 'elastic-apm-node';
 import { ConfigService } from 'src/config/config.service';
+import { ApmLogger } from './apm.logger';
 
 @Injectable()
 export class ApmService implements OnModuleInit {
@@ -14,14 +15,7 @@ export class ApmService implements OnModuleInit {
       elasticApmNode.start({
         serviceName: apmServiceName,
         serverUrl: apmServiceUrl,
-        logger: {
-          fatal: (message) => this.logger.error(message),
-          debug: (message) => this.logger.debug(message),
-          error: (message) => this.logger.error(message),
-          info: (message) => this.logger.log(message),
-          trace: (message) => this.logger.warn(message),
-          warn: (message) => this.logger.warn(message),
-        },
+        logger: new ApmLogger(this.logger),
       });
       this.logger.log('Registered in APM server');
     }
