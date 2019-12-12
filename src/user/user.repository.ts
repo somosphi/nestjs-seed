@@ -6,6 +6,8 @@ import {
   TransactionRepository,
 } from 'typeorm';
 import { User } from 'src/user/entity/user.entity';
+import { UserHistoryMethod } from './enum';
+import { UserHistory } from './entity/user-history.entity';
 
 @EntityRepository(User)
 export class UserRepository extends Repository<User> {
@@ -31,11 +33,19 @@ export class UserRepository extends Repository<User> {
         );
 
         if (actualUser) {
-          await repository.update(actualUser.id, record);
+          actualUser.emailAddress = record.emailAddress;
+          actualUser.name = record.name;
+          actualUser.username = record.username;
+          await repository.save(actualUser);
           fetchedIds.push(actualUser.id);
         } else {
-          const result = await repository.insert(record);
-          fetchedIds.push(result.identifiers.pop().id);
+          const user = new User();
+          user.emailAddress = record.emailAddress;
+          user.name = record.name;
+          user.username = record.username;
+          user.externalId = record.externalId;
+          await repository.save(user);
+          fetchedIds.push(user.id);
         }
       }),
     );

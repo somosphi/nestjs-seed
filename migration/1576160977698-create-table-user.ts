@@ -12,6 +12,7 @@ export class CreateTableUser1576160977698 implements MigrationInterface {
             unsigned: true,
             isPrimary: true,
             isGenerated: true,
+            generationStrategy: 'increment',
           },
           {
             type: 'bigint',

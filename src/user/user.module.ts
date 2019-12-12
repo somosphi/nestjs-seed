@@ -6,6 +6,7 @@ import { JsonplaceholderModule } from 'src/jsonplaceholder/jsonplaceholder.modul
 import { ScheduleModule } from 'nest-schedule';
 import { UserSchedule } from './user.schedule';
 import { UserController } from './user.controller';
+import { UserSubscriber } from './user.subscriber';
 
 @Module({
   imports: [

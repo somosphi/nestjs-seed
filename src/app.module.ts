@@ -7,6 +7,8 @@ import { AppController } from './app.controller';
 import { UserModule } from './user/user.module';
 import { User } from './user/entity/user.entity';
 import { ApmModule } from './apm/apm.module';
+import { UserHistory } from './user/entity/user-history.entity';
+import { UserSubscriber } from './user/user.subscriber';
 
 @Module({
   imports: [
@@ -25,7 +27,8 @@ import { ApmModule } from './apm/apm.module';
         username: configService.envConfig.typeormUsername,
         password: configService.envConfig.typeormPassword,
         synchronize: false,
-        entities: [User],
+        entities: [User, UserHistory],
+        subscribers: [UserSubscriber],
       }),
     }),
     ApmModule,

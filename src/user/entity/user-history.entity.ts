@@ -1,7 +1,8 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
 import { UserHistoryMethod } from '../enum';
+import { User } from './user.entity';
 
-@Entity()
+@Entity('userHistory')
 export class UserHistory {
   @PrimaryGeneratedColumn()
   id: string;
@@ -20,4 +21,7 @@ export class UserHistory {
 
   @Column()
   createdAt: Date;
+
+  @ManyToOne(() => User, user => user.histories)
+  user: User;
 }
