@@ -1,1 +1,2 @@
-export { FetchUserDto } from './fetch-user.dto';
+export * from './fetch-user.dto';
+export * from './find-user.dto';

@@ -12,8 +12,7 @@ import {
 import { UserService } from './user.service';
 import { User } from './user.entity';
 import { UserExceptionFilter } from './user-exception.filter';
-import { FetchUserDto } from './dto';
-import { FindUserDto } from './dto/find-user.dto';
+import { FetchUserDto, FindUserDto } from './dto';
 
 @Controller('user')
 @UseFilters(new UserExceptionFilter())
@@ -21,12 +20,12 @@ export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Get('/')
-  user() {
+  list() {
     return this.userService.list();
   }
 
   @Get('/:id')
-  async findOne(@Param() findUserDto: FindUserDto): Promise<User> {
+  async find(@Param() findUserDto: FindUserDto): Promise<User> {
     const user = await this.userService.findById(findUserDto.id);
     if (!user) {
       throw new NotFoundException();
@@ -36,7 +35,7 @@ export class UserController {
 
   @Post('/fetch')
   @HttpCode(HttpStatus.NO_CONTENT)
-  async fetch(@Body() fetchDto: FetchUserDto) {
-    await this.userService.fetchUser(fetchDto.externalId);
+  async fetch(@Body() fetchUserDto: FetchUserDto) {
+    await this.userService.fetchUser(fetchUserDto.externalId);
   }
 }

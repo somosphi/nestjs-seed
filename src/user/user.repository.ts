@@ -22,8 +22,8 @@ export class UserRepository extends Repository<User> {
   ): Promise<string[]> {
     const externalIds = records.map(record => record.externalId);
     const actualUsers = await repository.findByExternalIds(externalIds);
-
     const fetchedIds: string[] = [];
+
     await Promise.all(
       records.map(async record => {
         const actualUser = actualUsers.find(
@@ -36,6 +36,7 @@ export class UserRepository extends Repository<User> {
         }
       }),
     );
+
     return fetchedIds;
   }
 }
