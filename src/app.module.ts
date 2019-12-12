@@ -31,7 +31,6 @@ import { UserSubscriber } from './user/user.subscriber';
         subscribers: [UserSubscriber],
       }),
     }),
-    ApmModule,
   ],
   controllers: [AppController],
 })
