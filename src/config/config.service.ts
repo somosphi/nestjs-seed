@@ -40,11 +40,9 @@ export class ConfigService {
   private validateInput(config: any): ConfigEnv {
     const envConfig = this.initEnvConfig(config);
     const errors = validateSync(envConfig);
-
     if (errors.length) {
       throw errors.pop();
     }
-
     return envConfig;
   }
 }
