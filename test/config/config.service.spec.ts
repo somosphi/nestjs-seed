@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { ValidationError } from 'class-validator';
-import { ConfigService } from './config.service';
-import { ConfigEnv } from './config-env.model';
+import { ConfigService } from '../../src/config/config.service';
+import { ConfigEnv } from '../../src/config/config-env.model';
 
 describe('ConfigService', () => {
   const defaultEnv = {

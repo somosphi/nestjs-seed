@@ -1,4 +1,10 @@
-import { IsString, IsUrl, IsNumber, IsPositive } from 'class-validator';
+import {
+  IsString,
+  IsUrl,
+  IsNumber,
+  IsPositive,
+  IsOptional,
+} from 'class-validator';
 
 export class ConfigEnv {
   @IsString()
@@ -10,18 +16,29 @@ export class ConfigEnv {
   jsonplaceholderTimeout: number;
 
   @IsString()
-  mysqlHost: string;
+  typeormHost: string;
 
   @IsNumber()
   @IsPositive()
-  mysqlPort: number;
+  typeormPort: number;
 
   @IsString()
-  mysqlUsername: string;
+  typeormUsername: string;
 
   @IsString()
-  mysqlPassword: string;
+  typeormPassword: string;
 
   @IsString()
-  mysqlDatabase: string;
+  typeormDatabase: string;
+
+  @IsString()
+  typeormConnection: 'mysql';
+
+  @IsString()
+  @IsOptional()
+  apmServiceName?: string;
+
+  @IsString()
+  @IsOptional()
+  apmServiceUrl?: string;
 }

@@ -1,16 +1,14 @@
 import momentTimezone from 'moment-timezone';
 import { Test, TestingModule } from '@nestjs/testing';
-import { UserService } from './user.service';
-import { UserRepository } from './user.repository';
-import { User } from './user.entity';
+import { UserService } from 'src/user/user.service';
+import { UserRepository } from 'src/user/user.repository';
+import { User } from 'src/user/entity/user.entity';
 
 describe('UserService', () => {
   let service: UserService;
   let repository: UserRepository;
 
   beforeEach(async () => {
-    // tslint:disable-next-line:no-console
-    console.log('kk');
     const module: TestingModule = await Test.createTestingModule({
       imports: [],
       providers: [UserService, UserRepository],
@@ -40,21 +38,21 @@ describe('UserService', () => {
         .spyOn(repository, 'findOneOrFail')
         .mockImplementation(async () => user);
 
-      const result = await service.findByIdOrFail(user.id);
+      const result = await service.findById(user.id);
 
       expect(result).toBe(user);
       expect(repository.findOneOrFail).toBeCalledWith(user.id);
     });
 
     it('should throw user repository error when empty record', async () => {
-      const userId = 1;
+      const userId = '1';
       const err = new Error('OPS');
 
       jest.spyOn(repository, 'findOneOrFail').mockRejectedValue(err);
 
       let capturedErr: Error;
       try {
-        await service.findByIdOrFail(userId);
+        await service.findById(userId);
       } catch (err) {
         capturedErr = err;
       }
