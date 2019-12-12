@@ -1,3 +1,4 @@
+import ms from 'ms';
 import { Interval, NestSchedule } from 'nest-schedule';
 import { Injectable, Logger } from '@nestjs/common';
 import { UserService } from './user.service';
@@ -12,7 +13,7 @@ export class UserSchedule extends NestSchedule {
     super();
   }
 
-  @Interval(1000)
+  @Interval(ms('1m'))
   async runFetch() {
     try {
       const fetchedIds = await this.userService.fetch();
