@@ -5,7 +5,7 @@ import {
   Transaction,
   TransactionRepository,
 } from 'typeorm';
-import { User } from 'src/user/user.entity';
+import { User } from 'src/user/entity/user.entity';
 
 @EntityRepository(User)
 export class UserRepository extends Repository<User> {

@@ -2,7 +2,7 @@ import momentTimezone from 'moment-timezone';
 import { Test, TestingModule } from '@nestjs/testing';
 import { UserService } from 'src/user/user.service';
 import { UserRepository } from 'src/user/user.repository';
-import { User } from 'src/user/user.entity';
+import { User } from 'src/user/entity/user.entity';
 
 describe('UserService', () => {
   let service: UserService;

@@ -5,7 +5,7 @@ import { JsonplaceholderModule } from './jsonplaceholder/jsonplaceholder.module'
 import { ConfigService } from './config/config.service';
 import { AppController } from './app.controller';
 import { UserModule } from './user/user.module';
-import { User } from './user/user.entity';
+import { User } from './user/entity/user.entity';
 import { ApmModule } from './apm/apm.module';
 
 @Module({

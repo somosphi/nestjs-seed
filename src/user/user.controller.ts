@@ -10,7 +10,7 @@ import {
   HttpCode,
 } from '@nestjs/common';
 import { UserService } from './user.service';
-import { User } from './user.entity';
+import { User } from './entity/user.entity';
 import { UserExceptionFilter } from './user-exception.filter';
 import { FetchUserDto, FindUserDto } from './dto';
 
