@@ -1,15 +1,21 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger, OnModuleInit } from '@nestjs/common';
 import * as fs from 'fs';
 import * as dotenv from 'dotenv';
 import { validateSync } from 'class-validator';
 import { ConfigEnv } from './config-env.model';
 
 @Injectable()
-export class ConfigService {
+export class ConfigService implements OnModuleInit {
+  private readonly logger = new Logger(ConfigService.name);
+
   readonly envConfig: ConfigEnv;
 
   constructor(filePath: string) {
     this.envConfig = this.validateInput(this.readEnv(filePath));
+  }
+
+  onModuleInit() {
+    this.logger.log('Env config initialized successfully');
   }
 
   protected readEnv(filePath: string): any {
