@@ -1,21 +1,15 @@
-import { Controller, Get } from '@nestjs/common';
-import { ConfigService } from './config/config.service';
-import { JsonplaceholderService } from './jsonplaceholder/jsonplaceholder.service';
+import { Controller, Get, HttpCode, HttpStatus } from '@nestjs/common';
+import { Connection } from 'typeorm';
 
-@Controller('/app')
+@Controller()
 export class AppController {
   constructor(
-    private readonly configService: ConfigService,
-    private readonly json: JsonplaceholderService,
+    private readonly connection: Connection,
   ) {}
 
-  @Get('/config')
-  test() {
-    return this.configService.envConfig;
-  }
-
-  @Get('/fetch')
-  fetch() {
-    return this.json.findUsers();
+  @Get('/status')
+  @HttpCode(HttpStatus.NO_CONTENT)
+  async status() {
+    await this.connection.query('SELECT 1');
   }
 }
