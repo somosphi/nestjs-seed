@@ -3,18 +3,11 @@ import {
   EntitySubscriberInterface,
   InsertEvent,
   UpdateEvent,
-  Connection,
-  Repository,
-  ConnectionManager,
   EntityManager,
 } from 'typeorm';
 import { User } from './entity/user.entity';
 import { UserHistory } from './entity/user-history.entity';
 import { UserHistoryMethod } from './enum';
-import { UserRepository } from './user.repository';
-import { InjectConnection, InjectRepository } from '@nestjs/typeorm';
-import { Injectable } from '@nestjs/common';
-import { filter } from 'minimatch';
 
 @EventSubscriber()
 export class UserSubscriber implements EntitySubscriberInterface<User> {
