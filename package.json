@@ -1,8 +1,8 @@
 {
   "name": "nestjs-seed",
   "version": "0.0.1",
-  "description": "",
-  "author": "",
+  "description": "Nestjs seed",
+  "author": "Phi <somosphi.com>",
   "license": "MIT",
   "scripts": {
     "prebuild": "rimraf dist",
@@ -24,7 +24,6 @@
     "@nestjs/core": "^6.7.2",
     "@nestjs/platform-express": "^6.7.2",
     "@nestjs/typeorm": "^6.2.0",
-    "@somosphi/logger": "^1.2.11",
     "class-transformer": "^0.2.3",
     "class-validator": "^0.11.0",
     "dotenv": "^8.2.0",
