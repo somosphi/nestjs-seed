@@ -29,11 +29,12 @@ export class ConfigService implements OnModuleInit {
       config.JSONPLACEHOLDER_TIMEOUT,
       10,
     );
-    envConfig.mysqlHost = config.MYSQL_HOST;
-    envConfig.mysqlPort = parseInt(config.MYSQL_PORT, 10);
-    envConfig.mysqlDatabase = config.MYSQL_DATABASE;
-    envConfig.mysqlUsername = config.MYSQL_USERNAME;
-    envConfig.mysqlPassword = config.MYSQL_PASSWORD;
+    envConfig.typeormHost = config.TYPEORM_HOST;
+    envConfig.typeormPort = parseInt(config.TYPEORM_PORT, 10);
+    envConfig.typeormDatabase = config.TYPEORM_DATABASE;
+    envConfig.typeormUsername = config.TYPEORM_USERNAME;
+    envConfig.typeormPassword = config.TYPEORM_PASSWORD;
+    envConfig.typeormConnection = config.TYPEORM_CONNECTION;
     if (config.APM_SERVICE_NAME) {
       envConfig.apmServiceName = config.APM_SERVICE_NAME;
     }
