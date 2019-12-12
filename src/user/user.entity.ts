@@ -2,27 +2,24 @@ import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 
 @Entity()
 export class User {
-  @PrimaryGeneratedColumn({
-    type: 'bigint',
-    unsigned: true,
-  })
+  @PrimaryGeneratedColumn()
   id: string;
 
-  @Column('bigint', { unsigned: true, unique: true })
+  @Column()
   externalId: string;
 
-  @Column('text')
+  @Column()
   name: string;
 
-  @Column('text')
+  @Column()
   username: string;
 
-  @Column('text')
+  @Column()
   emailAddress: string;
 
-  @Column('datetime', { default: () => 'CURRENT_TIMESTAMP' })
+  @Column()
   createdAt: Date;
 
-  @Column('datetime', { default: () => 'CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP' })
+  @Column()
   updatedAt: Date;
 }
