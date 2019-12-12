@@ -1,8 +1,8 @@
 export class JsonplaceholderUser {
-  id: number;
-  name: string;
-  username: string;
-  email: string;
+  readonly id: number;
+  readonly name: string;
+  readonly username: string;
+  readonly email: string;
 
   constructor(data: Required<JsonplaceholderUser>) {
     Object.assign(this, {
