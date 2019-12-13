@@ -5,7 +5,7 @@ import {
   InternalServerErrorException,
   HttpException,
 } from '@nestjs/common';
-import { InvalidExternalIdException } from './exception';
+import { InvalidExternalIdException } from '../exception';
 import { HttpExceptionFilter } from 'src/shared/http-exception.filter';
 import { CodedException } from 'src/shared/coded.exception';
 

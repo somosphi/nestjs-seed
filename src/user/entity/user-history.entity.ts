@@ -1,5 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
-import { UserHistoryMethod } from '../enum';
+import { UserHistoryMethod } from '../user.enum';
 import { User } from './user.entity';
 
 @Entity('userHistory')
