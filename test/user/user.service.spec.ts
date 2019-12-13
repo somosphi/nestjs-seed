@@ -32,6 +32,7 @@ describe('UserService', () => {
         emailAddress: 'fulano@gmail.com',
         createdAt: momentTimezone.utc().toDate(),
         updatedAt: momentTimezone.utc().toDate(),
+        histories: [],
       };
 
       jest
@@ -73,6 +74,7 @@ describe('UserService', () => {
           emailAddress: 'fulano@gmail.com',
           createdAt: momentTimezone.utc().toDate(),
           updatedAt: momentTimezone.utc().toDate(),
+          histories: [],
         },
       ];
 
