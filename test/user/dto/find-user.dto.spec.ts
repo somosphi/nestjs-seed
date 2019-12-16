@@ -1,14 +1,14 @@
 
 import { ValidationError } from 'class-validator';
-import { FetchUserDto } from './fetch-user.dto';
+import { FindUserDto } from '../../../src/user/dto/find-user.dto';
 
-describe('FetchUserDto', () => {
+describe('FindUserDto', () => {
 
   it('should throw err when send invalid data', () => {
     let capturedErr: ValidationError;
     try {
-      new FetchUserDto({
-        externalId: 'asdsad',
+      const findUserDto = new FindUserDto({
+        id: 'asdsad',
       });
     } catch (err) {
       capturedErr = err;
@@ -19,8 +19,8 @@ describe('FetchUserDto', () => {
   it('should pass without errors when send valid data', () => {
     let capturedErr: Error;
     try {
-      new FetchUserDto({
-        externalId: '1',
+      const findUserDto = new FindUserDto({
+        id: '1',
       });
     } catch (err) {
       capturedErr = err;

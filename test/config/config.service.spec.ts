@@ -53,7 +53,6 @@ describe('ConfigService', () => {
     result.typeormPort = parseInt(defaultEnv.TYPEORM_PORT, 10);
     result.typeormUsername = defaultEnv.TYPEORM_USERNAME;
     result.typeormPassword = defaultEnv.TYPEORM_PASSWORD;
-    
     expect(service.envConfig).toEqual(result);
   });
 
