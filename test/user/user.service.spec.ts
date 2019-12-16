@@ -3,87 +3,36 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { UserService } from 'src/user/user.service';
 import { UserRepository } from 'src/user/user.repository';
 import { User } from 'src/user/entity/user.entity';
+import { JsonplaceholderService } from 'src/jsonplaceholder/jsonplaceholder.service';
+import { JsonplaceholderModule } from 'src/jsonplaceholder/jsonplaceholder.module';
+import { HttpService } from '@nestjs/common';
 
 describe('UserService', () => {
   let service: UserService;
   let repository: UserRepository;
+  let jsonplaceholderService: JsonplaceholderService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      imports: [],
-      providers: [UserService, UserRepository],
+      imports: [JsonplaceholderModule],
+      providers: [
+        UserService,
+        UserRepository,
+        {
+          provide: JsonplaceholderService,
+          useValue: new JsonplaceholderService(null),
+        },
+      ],
     }).compile();
 
     service = module.get<UserService>(UserService);
     repository = module.get<UserRepository>(UserRepository);
+    jsonplaceholderService = module.get<JsonplaceholderService>(JsonplaceholderService);
   });
 
   it('should be defined', () => {
     expect(service).toBeDefined();
-  });
-
-  describe('#findById', () => {
-    it('should return user repository result when exists record', async () => {
-      const user: User = {
-        id: '1',
-        externalId: '2',
-        name: 'Fualno de Tal',
-        username: 'fulano_de_tal',
-        emailAddress: 'fulano@gmail.com',
-        createdAt: momentTimezone.utc().toDate(),
-        updatedAt: momentTimezone.utc().toDate(),
-        histories: [],
-      };
-
-      jest
-        .spyOn(repository, 'findOneOrFail')
-        .mockImplementation(async () => user);
-
-      const result = await service.findById(user.id);
-
-      expect(result).toBe(user);
-      expect(repository.findOneOrFail).toBeCalledWith(user.id);
-    });
-
-    it('should throw user repository error when empty record', async () => {
-      const userId = '1';
-      const err = new Error('OPS');
-
-      jest.spyOn(repository, 'findOneOrFail').mockRejectedValue(err);
-
-      let capturedErr: Error;
-      try {
-        await service.findById(userId);
-      } catch (err) {
-        capturedErr = err;
-      }
-
-      expect(capturedErr).toBe(err);
-      expect(repository.findOneOrFail).toBeCalledWith(userId);
-    });
-  });
-
-  describe('#list', () => {
-    it('should return user repository result', async () => {
-      const mockData: User[] = [
-        {
-          id: '1',
-          externalId: '2',
-          name: 'Fualno de Tal',
-          username: 'fulano_de_tal',
-          emailAddress: 'fulano@gmail.com',
-          createdAt: momentTimezone.utc().toDate(),
-          updatedAt: momentTimezone.utc().toDate(),
-          histories: [],
-        },
-      ];
-
-      jest.spyOn(repository, 'find').mockImplementation(async () => mockData);
-
-      const result = await service.list();
-
-      expect(result).toBe(mockData);
-      expect(repository.find).toBeCalled();
-    });
+    expect(repository).toBeDefined();
+    expect(jsonplaceholderService).toBeDefined();
   });
 });

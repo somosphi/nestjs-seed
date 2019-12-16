@@ -12,7 +12,7 @@ import {
 import { UserService } from './user.service';
 import { User } from './entity/user.entity';
 import { FetchUserDto, FindUserDto } from './dto';
-import { UserExceptionFilter } from './filter/user-exception.filter';
+import { UserExceptionFilter } from './user-exception.filter';
 
 @Controller('user')
 @UseFilters(new UserExceptionFilter())
@@ -36,6 +36,6 @@ export class UserController {
   @Post('/fetch')
   @HttpCode(HttpStatus.NO_CONTENT)
   async fetch(@Body() fetchUserDto: FetchUserDto) {
-    await this.userService.fetchById(fetchUserDto.externalId);
+    await this.userService.fetchByExternalId(fetchUserDto.externalId);
   }
 }

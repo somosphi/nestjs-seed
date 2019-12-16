@@ -30,12 +30,12 @@ export class UserService {
     return this.userRepository.find();
   }
 
-  async fetchById(id: string): Promise<string[]> {
-    const externalUser = await this.jsonplaceholderService.findUser(id);
+  async fetchByExternalId(externalId: string): Promise<string> {
+    const externalUser = await this.jsonplaceholderService.findUser(externalId);
     if (!externalUser) {
       throw new InvalidExternalIdException();
     }
-    return await this.userRepository.syncByExternalIds([
+    const [id] = await this.userRepository.syncByExternalIds([
       {
         externalId: externalUser.id.toString(),
         username: externalUser.username,
@@ -43,5 +43,6 @@ export class UserService {
         emailAddress: externalUser.email,
       },
     ]);
+    return id;
   }
 }

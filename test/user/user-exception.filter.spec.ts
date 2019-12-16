@@ -1,5 +1,5 @@
-import { UserExceptionFilter } from './user-exception.filter';
-import { InvalidExternalIdException } from '../exception';
+import { UserExceptionFilter } from '../../src/user/user-exception.filter';
+import { InvalidExternalIdException } from '../../src/user/exception';
 import {
   BadRequestException,
   InternalServerErrorException,
