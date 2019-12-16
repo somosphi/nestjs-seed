@@ -1,7 +1,7 @@
 import { validateSync, ValidatorOptions } from 'class-validator';
-import { AutoFiller } from './auto-filler.mode';
+import { FullFilled } from './full-filled.model';
 
-export abstract class AutoValidator<T> extends AutoFiller<T> {
+export abstract class AutoValidator<T> extends FullFilled<T> {
   constructor(data: Required<T>, options?: ValidatorOptions) {
     super(data);
     this.validate(options);
