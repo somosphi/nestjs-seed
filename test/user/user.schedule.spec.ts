@@ -3,7 +3,7 @@ import { UserService } from 'src/user/user.service';
 import { UserSchedule } from 'src/user/user.schedule';
 import { Logger } from '@nestjs/common';
 
-describe('User Controller', () => {
+describe('User Schedule', () => {
   let schedule: UserSchedule;
   let service: UserService;
 
