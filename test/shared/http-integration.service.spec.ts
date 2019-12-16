@@ -1,4 +1,5 @@
 import { HttpIntegrationService } from 'src/shared/http-integration.service';
+import { HttpStatus } from '@nestjs/common';
 
 describe('HttpIntegrationService', () => {
   describe('#isNotFoundError', () => {
@@ -17,7 +18,7 @@ describe('HttpIntegrationService', () => {
           config: {},
           request: '',
           data: '',
-          status: 400,
+          status: HttpStatus.BAD_REQUEST,
           statusText: '400',
           headers: {},
         },
@@ -44,7 +45,7 @@ describe('HttpIntegrationService', () => {
           config: {},
           request: '',
           data: '',
-          status: 404,
+          status: HttpStatus.NOT_FOUND,
           statusText: '404',
           headers: {},
         },
