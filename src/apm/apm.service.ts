@@ -7,7 +7,7 @@ import { ApmLogger } from './apm.logger';
 export class ApmService implements OnModuleInit {
   private readonly logger = new Logger(ApmService.name);
 
-  constructor(private readonly configService: ConfigService) {}
+  constructor(readonly configService: ConfigService) {}
 
   onModuleInit() {
     const { apmServiceName, apmServiceUrl } = this.configService.envConfig;
