@@ -1,6 +1,6 @@
 {
   "name": "nestjs-seed",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Nestjs seed",
   "author": "Phi <somosphi.com>",
   "license": "MIT",
@@ -66,6 +66,7 @@
   },
   "jest": {
     "modulePaths": [
+      "../../",
       "<rootDir>"
     ],
     "moduleFileExtensions": [
@@ -73,7 +74,7 @@
       "json",
       "ts"
     ],
-    "rootDir": ".",
+    "rootDir": "./test/unit",
     "testRegex": ".spec.ts$",
     "transform": {
       "^.+\\.(t|j)s$": "ts-jest"

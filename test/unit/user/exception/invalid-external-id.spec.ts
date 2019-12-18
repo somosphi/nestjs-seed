@@ -1,4 +1,4 @@
-import { InvalidExternalIdException } from '../../../src/user/exception/invalid-external-id.exception';
+import { InvalidExternalIdException } from 'src/user/exception/invalid-external-id.exception';
 
 describe('InvalidExternalIdExpception', () => {
 

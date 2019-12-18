@@ -2,8 +2,8 @@ import { HttpModule, HttpService, NotFoundException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { AxiosResponse } from 'axios';
 import { of } from 'rxjs';
-import { JsonplaceholderService } from '../../src/jsonplaceholder/jsonplaceholder.service';
-import { JsonplaceholderUser } from '../../src/jsonplaceholder/jsonplaceholder-user.model';
+import { JsonplaceholderService } from 'src/jsonplaceholder/jsonplaceholder.service';
+import { JsonplaceholderUser } from 'src/jsonplaceholder/jsonplaceholder-user.model';
 
 describe('JsonplaceholderService', () => {
   let service: JsonplaceholderService;

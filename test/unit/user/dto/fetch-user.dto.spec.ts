@@ -1,6 +1,6 @@
 
 import { ValidationError } from 'class-validator';
-import { FetchUserDto } from '../../../src/user/dto/fetch-user.dto';
+import { FetchUserDto } from 'src/user/dto';
 
 describe('FetchUserDto', () => {
 

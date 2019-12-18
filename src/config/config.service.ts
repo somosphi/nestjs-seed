@@ -24,6 +24,7 @@ export class ConfigService implements OnModuleInit {
 
   protected initEnvConfig(config: any): ConfigEnv {
     const envConfig = new ConfigEnv();
+    envConfig.nodeEnv = config.NODE_ENV;
     envConfig.jsonplaceholderUrl = config.JSONPLACEHOLDER_URL;
     envConfig.jsonplaceholderTimeout = parseInt(
       config.JSONPLACEHOLDER_TIMEOUT,

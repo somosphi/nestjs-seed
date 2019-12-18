@@ -9,6 +9,8 @@ import { User } from './user/entity/user.entity';
 import { ApmModule } from './apm/apm.module';
 import { UserHistory } from './user/entity/user-history.entity';
 import { UserSubscriber } from './user/user.subscriber';
+import { CreateTableUser1576160977698 } from 'migration/1576160977698-create-table-user';
+import { CreateTableUserHistory1576171192660 } from 'migration/1576171192660-create-table-user-history';
 
 @Module({
   imports: [
@@ -20,7 +22,7 @@ import { UserSubscriber } from './user/user.subscriber';
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => ({
-        type: configService.envConfig.typeormConnection,
+        type: 'sqlite',
         host: configService.envConfig.typeormHost,
         port: configService.envConfig.typeormPort,
         database: configService.envConfig.typeormDatabase,
@@ -29,6 +31,11 @@ import { UserSubscriber } from './user/user.subscriber';
         synchronize: false,
         entities: [User, UserHistory],
         subscribers: [UserSubscriber],
+        migrationsRun: true,
+        migrations: [
+          CreateTableUser1576160977698,
+          CreateTableUserHistory1576171192660,
+        ],
       }),
     }),
   ],

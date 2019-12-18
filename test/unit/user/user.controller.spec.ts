@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { UserController } from '../../src/user/user.controller';
+import { UserController } from 'src/user/user.controller';
 import { UserService } from 'src/user/user.service';
 import { FetchUserDto, FindUserDto } from 'src/user/dto';
 import { NotFoundException } from '@nestjs/common';

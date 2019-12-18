@@ -1,6 +1,6 @@
 
 import { ValidationError } from 'class-validator';
-import { FindUserDto } from '../../../src/user/dto/find-user.dto';
+import { FindUserDto } from 'src/user/dto/find-user.dto';
 
 describe('FindUserDto', () => {
 
