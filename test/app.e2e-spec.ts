@@ -2,9 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
 import request from 'supertest';
 import { AppModule } from './../src/app.module';
-import { Database } from 'sqlite3';
 import { ConfigService } from 'src/config/config.service';
-import * as path from 'path';
 
 const database = new Database(':memory:');
 database.get('SELECT 1', (err, data) => {
@@ -23,7 +21,7 @@ describe('AppController (e2e)', () => {
       providers: [
         {
           provide: ConfigService,
-          useValue: new ConfigService(path.join(__dirname, '../.env.e2e')),
+          useValue: new ConfigService('env.e2e'),
         },
       ],
     }).compile();
