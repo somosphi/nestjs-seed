@@ -7,24 +7,24 @@ import {
 } from '@nestjs/common';
 import { InvalidExternalIdException } from './exception';
 import { HttpExceptionFilter } from 'src/shared/http-exception.filter';
-import { CodedException } from 'src/shared/coded.exception';
 
-@Catch(CodedException)
+@Catch(Error)
 export class UserExceptionFilter extends HttpExceptionFilter {
-  catch(exception: any, host: ArgumentsHost) {
+  protected transformException(exception: any): HttpException {
     switch (exception.constructor) {
       case InvalidExternalIdException:
-        return super.catch(
-          new BadRequestException({
-            code: exception.code,
-            message: exception.message,
-          }),
-          host,
-        );
+        return new BadRequestException({
+          code: exception.code,
+          message: exception.message,
+        });
       case HttpException:
-        return super.catch(exception, host);
+        return exception;
       default:
-        return super.catch(new InternalServerErrorException(), host);
+        return new InternalServerErrorException();
     }
+  }
+
+  catch(exception: any, host: ArgumentsHost) {
+    super.catch(this.transformException(exception), host);
   }
 }

@@ -4,9 +4,19 @@ import {
   IsNumber,
   IsPositive,
   IsOptional,
+  IsEnum,
 } from 'class-validator';
 
+enum NodeEnv {
+  Development = 'development',
+  Production = 'production',
+}
+
 export class ConfigEnv {
+  @IsString()
+  @IsEnum(NodeEnv)
+  nodeEnv: string;
+
   @IsString()
   @IsUrl()
   jsonplaceholderUrl: string;
@@ -41,4 +51,8 @@ export class ConfigEnv {
   @IsString()
   @IsOptional()
   apmServiceUrl?: string;
+
+  get isProduction(): boolean {
+    return this.nodeEnv === NodeEnv.Production;
+  }
 }

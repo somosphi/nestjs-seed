@@ -1,17 +1,21 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { ValidationError } from 'class-validator';
-import { ConfigService } from '../../src/config/config.service';
-import { ConfigEnv } from '../../src/config/config-env.model';
+import { ConfigService } from 'src/config/config.service';
+import { ConfigEnv } from 'src/config/config-env.model';
 
 describe('ConfigService', () => {
   const defaultEnv = {
+    NODE_ENV: 'development',
     JSONPLACEHOLDER_URL: 'http://localhost.com/jsonplaceholder-test',
     JSONPLACEHOLDER_TIMEOUT: '300',
-    MYSQL_HOST: 'localhost',
-    MYSQL_PORT: '33O6',
-    MYSQL_DATABASE: 'seed_nest',
-    MYSQL_USERNAME: 'root',
-    MYSQL_PASSWORD: '1234fudh23',
+    TYPEORM_CONNECTION: 'mysql',
+    TYPEORM_HOST: 'localhost',
+    TYPEORM_PORT: '33O6',
+    TYPEORM_DATABASE: 'seed_nest',
+    TYPEORM_USERNAME: 'root',
+    TYPEORM_PASSWORD: '',
+    APM_SERVICE_NAME: 'opa',
+    APM_SERVICE_URL: 'localhost',
   };
 
   const initService = async (config: any): Promise<ConfigService> => {
@@ -41,18 +45,22 @@ describe('ConfigService', () => {
     const service = await initService(defaultEnv);
 
     const result = new ConfigEnv();
+    result.nodeEnv = defaultEnv.NODE_ENV;
     result.jsonplaceholderTimeout = parseInt(
       defaultEnv.JSONPLACEHOLDER_TIMEOUT,
       10,
     );
+    result.typeormConnection = defaultEnv.TYPEORM_CONNECTION as 'mysql';
     result.jsonplaceholderUrl = defaultEnv.JSONPLACEHOLDER_URL;
-    result.mysqlDatabase = defaultEnv.MYSQL_DATABASE;
-    result.mysqlHost = defaultEnv.MYSQL_HOST;
-    result.mysqlPort = parseInt(defaultEnv.MYSQL_PORT, 10);
-    result.mysqlUsername = defaultEnv.MYSQL_USERNAME;
-    result.mysqlPassword = defaultEnv.MYSQL_PASSWORD;
-
+    result.typeormDatabase = defaultEnv.TYPEORM_DATABASE;
+    result.typeormHost = defaultEnv.TYPEORM_HOST;
+    result.typeormPort = parseInt(defaultEnv.TYPEORM_PORT, 10);
+    result.typeormUsername = defaultEnv.TYPEORM_USERNAME;
+    result.typeormPassword = defaultEnv.TYPEORM_PASSWORD;
+    result.apmServiceName = defaultEnv.APM_SERVICE_NAME;
+    result.apmServiceUrl = defaultEnv.APM_SERVICE_URL;
     expect(service.envConfig).toEqual(result);
+    expect(result.isProduction).toBeFalsy();
   });
 
   it('should throw err on env is invalid', async () => {

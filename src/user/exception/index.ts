@@ -1,1 +1,1 @@
-export { InvalidExternalIdException } from './invalid-external-id.exception';
+export * from './invalid-external-id.exception';

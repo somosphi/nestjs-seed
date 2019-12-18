@@ -18,12 +18,13 @@ export class ConfigService implements OnModuleInit {
     this.logger.log('Env config initialized successfully');
   }
 
-  protected readEnv(filePath: string): any {
-    return dotenv.parse(fs.readFileSync(filePath));
+  protected readEnv(filePath: string): Required<ConfigEnv> {
+    return dotenv.parse(fs.readFileSync(filePath)) as any;
   }
 
   protected initEnvConfig(config: any): ConfigEnv {
     const envConfig = new ConfigEnv();
+    envConfig.nodeEnv = config.NODE_ENV;
     envConfig.jsonplaceholderUrl = config.JSONPLACEHOLDER_URL;
     envConfig.jsonplaceholderTimeout = parseInt(
       config.JSONPLACEHOLDER_TIMEOUT,

@@ -7,7 +7,7 @@ import {
 } from 'typeorm';
 import { User } from './entity/user.entity';
 import { UserHistory } from './entity/user-history.entity';
-import { UserHistoryMethod } from './enum';
+import { UserHistoryMethod } from './user.enum';
 
 @EventSubscriber()
 export class UserSubscriber implements EntitySubscriberInterface<User> {

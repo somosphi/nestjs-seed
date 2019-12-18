@@ -1,9 +1,10 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
-import { UserHistoryMethod } from '../enum';
+import { UserHistoryMethod } from '../user.enum';
 import { User } from './user.entity';
+import { PartialFilled } from 'src/shared/partial-filled.model';
 
 @Entity('userHistory')
-export class UserHistory {
+export class UserHistory extends PartialFilled<UserHistory> {
   @PrimaryGeneratedColumn()
   id: string;
 
