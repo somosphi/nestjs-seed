@@ -11,14 +11,16 @@ import { HttpExceptionFilter } from 'src/shared/http-exception.filter';
 @Catch(Error)
 export class UserExceptionFilter extends HttpExceptionFilter {
   protected transformException(exception: any): HttpException {
+    if (exception instanceof HttpException) {
+      return exception;
+    }
+
     switch (exception.constructor) {
       case InvalidExternalIdException:
         return new BadRequestException({
           code: exception.code,
           message: exception.message,
         });
-      case HttpException:
-        return exception;
       default:
         return new InternalServerErrorException();
     }
