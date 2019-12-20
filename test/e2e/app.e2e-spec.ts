@@ -2,19 +2,21 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
 import request from 'supertest';
 import { AppModule } from '../../src/app.module';
-import { ConfigService } from 'src/config/config.service';
+import { TypeOrmModule } from '@nestjs/typeorm';
 
 describe('AppController (e2e)', () => {
   let app: INestApplication;
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
-      imports: [AppModule],
-      providers: [
-        {
-          provide: ConfigService,
-          useValue: new ConfigService('env.e2e'),
-        },
+      imports: [
+        AppModule,
+        TypeOrmModule.forRoot({
+          type: 'sqlite',
+          database: ':memory:',
+          entities: [__dirname + '/**/*.entity{.ts,.js}'],
+          synchronize: false,
+        }),
       ],
     }).compile();
 
@@ -23,10 +25,18 @@ describe('AppController (e2e)', () => {
   });
 
   it('/status (GET)', () => {
-    return request(app.getHttpServer()).get('/status').expect(204);
+    return request(app.getHttpServer())
+      .get('/status')
+      .expect(204);
   });
 
   it('/user (GET)', () => {
-    return request(app.getHttpServer()).get('/user').expect(200, []);
+    return request(app.getHttpServer())
+      .get('/user')
+      .expect(200, []);
+  });
+
+  afterAll(async () => {
+    await app.close();
   });
 });

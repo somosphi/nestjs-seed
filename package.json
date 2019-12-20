@@ -17,7 +17,7 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/e2e/jest-e2e.json",
+    "test:e2e": "jest --config ./test/e2e/jest-e2e.json --forceExit --detectOpenHandles",
     "migration:create": "ts-node node_modules/.bin/typeorm migration:create -n",
     "migration:run": "ts-node node_modules/.bin/typeorm migration:run",
     "migration:revert": "ts-node node_modules/.bin/typeorm migration:revert"
@@ -40,6 +40,7 @@
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.0",
     "rxjs": "^6.5.3",
+    "sqlite3": "^4.1.1",
     "swagger-ui-express": "^4.1.2",
     "typeorm": "^0.2.21"
   },
