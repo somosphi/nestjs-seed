@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { UserRepository } from './user.repository';
 import { JsonplaceholderService } from 'src/jsonplaceholder/jsonplaceholder.service';
 import { InvalidExternalIdException } from './exception';
+import { User } from './entity';
 
 @Injectable()
 export class UserService {
@@ -43,6 +44,7 @@ export class UserService {
         emailAddress: externalUser.email,
       },
     ]);
+
     return id;
   }
 }

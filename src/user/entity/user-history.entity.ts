@@ -5,7 +5,7 @@ import { PartialFilled } from 'src/shared/partial-filled.model';
 
 @Entity('userHistory')
 export class UserHistory extends PartialFilled<UserHistory> {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn({ type: 'bigint' })
   id: string;
 
   @Column()
