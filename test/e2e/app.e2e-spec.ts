@@ -1,15 +1,17 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication, NotFoundException } from '@nestjs/common';
 import request from 'supertest';
-import { AppModule } from '../../src/app.module';
+import moment from 'moment';
+import { Connection } from 'typeorm';
+import { AppModule } from 'src/app.module';
 import { User } from 'src/user/entity';
 import { ConfigService } from 'src/config/config.service';
-import { Connection } from 'typeorm';
 import { InvalidExternalIdException } from 'src/user/exception';
-import moment from 'moment';
+import { UserRepository } from 'src/user/user.repository';
 
 describe('AppController (e2e)', () => {
   let app: INestApplication;
+  let repository: UserRepository;
 
   beforeAll(async () => {
     const configService = new ConfigService('.env');
@@ -26,6 +28,8 @@ describe('AppController (e2e)', () => {
 
   beforeEach(async () => {
     const connection = app.get(Connection);
+    repository = connection.manager.getCustomRepository(UserRepository);
+
     await connection.dropDatabase();
     await connection.runMigrations();
   });
@@ -49,26 +53,46 @@ describe('AppController (e2e)', () => {
   });
 
   it('/user (GET) with status 200, array with users', async () => {
-    const connection = app.get(Connection);
-    await connection
-      .createQueryBuilder()
-      .insert()
-      .into(User)
-      .values([
-        {
-          id: '4',
-          externalId: '3',
-          name: 'gilberto da silva',
-          username: 'gil',
-          emailAddress: 'gil.br@test.com',
-          createdAt: moment.utc().toDate(),
-          updatedAt: moment.utc().toDate(),
-          histories: [],
-        },
-      ]);
+    await repository.save([
+      {
+        externalId: '3',
+        name: 'gilberto da silva',
+        username: 'gil',
+        emailAddress: 'gil.br@test.com',
+        createdAt: moment.utc().toDate(),
+        updatedAt: moment.utc().toDate(),
+        histories: [],
+      },
+      {
+        externalId: '5',
+        name: 'daniel da rosa',
+        username: 'dani',
+        emailAddress: 'dani.br@test.com',
+        createdAt: moment.utc().toDate(),
+        updatedAt: moment.utc().toDate(),
+        histories: [],
+      },
+    ]);
 
     const response = await request(app.getHttpServer()).get('/user');
-    console.log(response.body);
+
+    expect(response.body).toHaveLength(2);
+    expect(response.status).toEqual(200);
+  });
+
+  it('/user/:id (GET) with successfully', async () => {
+    const user = new User({
+      externalId: '3',
+      name: 'gilberto da silva',
+      username: 'gil',
+      emailAddress: 'gil.br@test.com',
+    });
+
+    await repository.insert(user);
+    const response = await request(app.getHttpServer()).get(`/user/${user.id}`);
+
+    expect(response.body).toMatchObject(user);
+    expect(response.status).toEqual(200);
   });
 
   it('/user/:id (GET) with status 404', () => {

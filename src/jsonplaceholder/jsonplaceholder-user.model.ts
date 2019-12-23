@@ -1,6 +1,6 @@
-import { FullFilled } from 'src/shared/full-filled.model';
+import { PartialFilled } from 'src/shared/partial-filled.model';
 
-export class JsonplaceholderUser extends FullFilled<JsonplaceholderUser> {
+export class JsonplaceholderUser extends PartialFilled<JsonplaceholderUser> {
   readonly id: number;
   readonly name: string;
   readonly username: string;

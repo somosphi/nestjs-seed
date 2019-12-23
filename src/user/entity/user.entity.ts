@@ -4,7 +4,7 @@ import { PartialFilled } from 'src/shared/partial-filled.model';
 
 @Entity()
 export class User extends PartialFilled<User> {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn({ type: 'bigint' })
   id: string;
 
   @Column()
@@ -25,6 +25,9 @@ export class User extends PartialFilled<User> {
   @Column()
   updatedAt: Date;
 
-  @OneToMany(() => UserHistory, userHistory => userHistory.user)
+  @OneToMany(
+    () => UserHistory,
+    userHistory => userHistory.user,
+  )
   histories: UserHistory[];
 }
