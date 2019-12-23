@@ -35,7 +35,6 @@ export class UserService {
     if (!externalUser) {
       throw new InvalidExternalIdException();
     }
-
     const [id] = await this.userRepository.syncByExternalIds([
       {
         externalId: externalUser.id.toString(),
@@ -44,6 +43,7 @@ export class UserService {
         emailAddress: externalUser.email,
       },
     ]);
+
     return id;
   }
 }
