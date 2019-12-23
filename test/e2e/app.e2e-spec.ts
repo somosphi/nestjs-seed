@@ -9,25 +9,33 @@ import { ConfigService } from 'src/config/config.service';
 import { InvalidExternalIdException } from 'src/user/exception';
 import { UserRepository } from 'src/user/user.repository';
 
-describe('AppController (e2e)', () => {
+describe('Application (e2e)', () => {
   let app: INestApplication;
   let repository: UserRepository;
+  let server: request.SuperTest<request.Test>;
 
   beforeAll(async () => {
     const configService = new ConfigService('.env');
+
     configService.envConfig.typeormDatabase += '_test';
+
     const moduleFixture: TestingModule = await Test.createTestingModule({
       imports: [AppModule],
     })
       .overrideProvider(ConfigService)
       .useValue(configService)
       .compile();
+
     app = moduleFixture.createNestApplication();
+
     await app.init();
+
+    server = request(app.getHttpServer());
   });
 
   beforeEach(async () => {
     const connection = app.get(Connection);
+
     repository = connection.manager.getCustomRepository(UserRepository);
 
     await connection.dropDatabase();
@@ -36,20 +44,18 @@ describe('AppController (e2e)', () => {
 
   afterAll(async () => {
     const connection = app.get(Connection);
+
     await connection.dropDatabase();
+
     await app.close();
   });
 
   it('/status (GET) with status 204', () => {
-    return request(app.getHttpServer())
-      .get('/status')
-      .expect(204);
+    return server.get('/status').expect(204);
   });
 
   it('/user (GET) with status 200, array to be empty', () => {
-    return request(app.getHttpServer())
-      .get('/user')
-      .expect(200, []);
+    return server.get('/user').expect(200, []);
   });
 
   it('/user (GET) with status 200, array with users', async () => {
@@ -74,7 +80,7 @@ describe('AppController (e2e)', () => {
       },
     ]);
 
-    const response = await request(app.getHttpServer()).get('/user');
+    const response = await server.get('/user');
 
     expect(response.body).toHaveLength(2);
     expect(response.status).toEqual(200);
@@ -89,7 +95,8 @@ describe('AppController (e2e)', () => {
     });
 
     await repository.insert(user);
-    const response = await request(app.getHttpServer()).get(`/user/${user.id}`);
+
+    const response = await server.get(`/user/${user.id}`);
 
     expect(response.body).toMatchObject(user);
     expect(response.status).toEqual(200);
@@ -97,14 +104,16 @@ describe('AppController (e2e)', () => {
 
   it('/user/:id (GET) with status 404', () => {
     const id = '61';
-    return request(app.getHttpServer())
+
+    return server
       .get(`/user/${id}`)
       .expect(404, new NotFoundException().getResponse());
   });
 
   it('/user/fetch (POST) INVALID_EXTERNAL_ID', () => {
     const err = new InvalidExternalIdException();
-    return request(app.getHttpServer())
+
+    return server
       .post(`/user/fetch`)
       .send({ externalId: '23' })
       .expect(400, err.toJSON());
@@ -112,13 +121,15 @@ describe('AppController (e2e)', () => {
 
   it('/user/fetch (POST) with successfuly', async () => {
     const externalId = '1';
-    await request(app.getHttpServer())
+
+    await server
       .post(`/user/fetch`)
       .send({ externalId })
       .expect(204);
 
-    const res = await request(app.getHttpServer()).get('/user');
+    const res = await server.get('/user');
     const user = res.body.find(data => data.externalId === externalId);
+
     expect(user).not.toBeUndefined();
   });
 });
