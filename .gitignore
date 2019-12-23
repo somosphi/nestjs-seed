@@ -1,4 +1,4 @@
-.env.e2e
+.env
 
 # compiled output
 /dist
