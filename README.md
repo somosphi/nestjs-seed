@@ -24,9 +24,9 @@ Seed API with [Nest](https://github.com/nestjs/nest) framework TypeScript, a pro
 
 - Job for to sync users by integration [jsonplaceholder](http://jsonplaceholder.typicode.com/users) with the project database.
 - Apm logger.
-- Config validation load env.- Routes for users,  list all users, get user and to sync a user.
+- Config validation load env.
 - Request validation with class-validator 
-- Routes for users,  list all users, get user and to sync a user.
+- Routes for users, list all users, get user and to sync a user.
 
 ## Installation
 
