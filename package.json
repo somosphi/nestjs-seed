@@ -78,11 +78,11 @@
       "ts"
     ],
     "rootDir": ".",
-    "testRegex": ".spec.ts$",
+    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.[jt]sx?$",
     "transform": {
       "^.+\\.(t|j)s$": "ts-jest"
     },
-    "coverageDirectory": "./coverage",
+    "coverageDirectory": "../coverage",
     "testEnvironment": "node"
   }
 }
