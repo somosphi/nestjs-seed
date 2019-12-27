@@ -71,12 +71,13 @@
       "../../",
       "<rootDir>"
     ],
+   
     "moduleFileExtensions": [
       "js",
       "json",
       "ts"
     ],
-    "rootDir": "./test/unit",
+    "rootDir": ".",
     "testRegex": ".spec.ts$",
     "transform": {
       "^.+\\.(t|j)s$": "ts-jest"
