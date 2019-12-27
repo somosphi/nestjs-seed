@@ -1,5 +1,6 @@
+<a href='https://coveralls.io/github/CiroStodulski/nestjs-seed?branch=master'><img src='https://coveralls.io/repos/github/CiroStodulski/nestjs-seed/badge.svg?branch=master' alt='Coverage Status' /></a>
+
 <p align="center">
-  [![Coverage Status](https://coveralls.io/repos/github/CiroStodulski/nestjs-seed/badge.svg?branch=master)](https://coveralls.io/github/CiroStodulski/nestjs-seed?branch=master)
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo_text.svg" width="320" alt="Nest Logo" /></a>
 </p>
 
