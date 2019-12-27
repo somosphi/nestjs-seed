@@ -20,7 +20,8 @@
     "test:e2e": "jest --config ./test/jest-e2e.json --watch",
     "migration:create": "ts-node node_modules/.bin/typeorm migration:create -n",
     "migration:run": "ts-node node_modules/.bin/typeorm migration:run",
-    "migration:revert": "ts-node node_modules/.bin/typeorm migration:revert"
+    "migration:revert": "ts-node node_modules/.bin/typeorm migration:revert",
+    "coveralls": "jest --coverage && cat ./coverage/lcov.info | coveralls"
   },
   "dependencies": {
     "@nestjs/common": "^6.7.2",
