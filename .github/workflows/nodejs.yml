@@ -1,4 +1,4 @@
-name: NodeSeedNestJs
+name: Node CI
 
 on: [push]
 
