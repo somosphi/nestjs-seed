@@ -1,7 +1,7 @@
 import { IsNumberString } from 'class-validator';
-import { AutoValidator } from 'src/shared/auto-validator.model';
+import { PartialFilled } from 'src/shared/partial-filled.model';
 
-export class FetchUserDto extends AutoValidator<FetchUserDto> {
+export class FetchUserDto extends PartialFilled<FetchUserDto> {
   @IsNumberString()
   readonly externalId: string;
 }

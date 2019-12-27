@@ -22,15 +22,15 @@ import { CreateTableUserHistory1576171192660 } from 'migration/1576171192660-cre
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => ({
-        type: 'sqlite',
+        type: configService.envConfig.typeormConnection,
         host: configService.envConfig.typeormHost,
         port: configService.envConfig.typeormPort,
         database: configService.envConfig.typeormDatabase,
         username: configService.envConfig.typeormUsername,
         password: configService.envConfig.typeormPassword,
-        synchronize: false,
         entities: [User, UserHistory],
         subscribers: [UserSubscriber],
+        synchronize: false,
         migrationsRun: true,
         migrations: [
           CreateTableUser1576160977698,
