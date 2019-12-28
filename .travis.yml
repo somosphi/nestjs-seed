@@ -4,4 +4,4 @@ node_js:
 script:
   - npm i
   - echo -e "NODE_ENV=development\nJSONPLACEHOLDER_URL=https://jsonplaceholder.typicode.com\nJSONPLACEHOLDER_TIMEOUT=5000\nTYPEORM_CONNECTION=mysql\nTYPEORM_USERNAME=root\nTYPEORM_PASSWORD=\nTYPEORM_HOST=localhost\nTYPEORM_PORT=3306\nTYPEORM_DATABASE=nestjs_seed\nTYPEORM_MIGRATIONS='migration\*.ts'\nTYPEORM_MIGRATIONS_DIR=migration\nAPM_SERVICE_NAME=\nAPM_SERVICE_URL=" >> .env
-  - npm run coveralls
+  - npm run test:cov
