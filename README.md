@@ -1,3 +1,4 @@
+![badge](https://github.com/somosphi/nestjs-seed/workflows/Node%20CI/badge.svg)
 [![Build Status](https://travis-ci.org/CiroStodulski/nestjs-seed.svg?branch=master)](https://travis-ci.org/CiroStodulski/nestjs-seed)
 [![Coverage Status](https://coveralls.io/repos/github/CiroStodulski/nestjs-seed/badge.svg?branch=master)](https://coveralls.io/github/CiroStodulski/nestjs-seed?branch=master)
 
