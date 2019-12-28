@@ -25,11 +25,3 @@ jobs:
         npm test
       env:
         CI: true
-    steps:
-     - name: Test & publish code coverage
-       uses: paambaati/codeclimate-action@v2.3.0
-       env:
-         CC_TEST_REPORTER_ID: <code_climate_reporter_id>
-       with:
-         coverageCommand: npm run coverage
-         debug: true
