@@ -1,7 +1,21 @@
 .language: node_js
 node_js:
   - '11'
+env:
+  JSONPLACEHOLDER_URL: https://jsonplaceholder.typicode.com
+  JSONPLACEHOLDER_TIMEOUT: 5000
+  NODE_ENV: development
+  TYPEORM_CONNECTION: mysql
+  TYPEORM_USERNAME: root
+  TYPEORM_PASSWORD:
+  TYPEORM_HOST: localhost 
+  TYPEORM_PORT: 3306
+  TYPEORM_DATABASE: nestjs_seed
+  TYPEORM_MIGRATIONS: migration\*.ts
+  TYPEORM_MIGRATIONS_DIR: migration
+  APM_SERVICE_NAME: 
+  APM_SERVICE_URL:
 script:
   - npm i
-  - echo -e "NODE_ENV=development\nJSONPLACEHOLDER_URL=https://jsonplaceholder.typicode.com\nJSONPLACEHOLDER_TIMEOUT=5000\nTYPEORM_CONNECTION=mysql\nTYPEORM_USERNAME=root\nTYPEORM_PASSWORD=\nTYPEORM_HOST=localhost\nTYPEORM_PORT=3306\nTYPEORM_DATABASE=nestjs_seed\nTYPEORM_MIGRATIONS='migration\*.ts'\nTYPEORM_MIGRATIONS_DIR=migration\nAPM_SERVICE_NAME=\nAPM_SERVICE_URL=" >> .env
+  - echo -e "" >> .env
   - npm run test:cov
