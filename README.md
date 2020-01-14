@@ -1,6 +1,5 @@
 ![badge](https://github.com/somosphi/nestjs-seed/workflows/Node%20CI/badge.svg)
-[![Build Status](https://travis-ci.org/CiroStodulski/nestjs-seed.svg?branch=master)](https://travis-ci.org/CiroStodulski/nestjs-seed)
-[![Coverage Status](https://coveralls.io/repos/github/CiroStodulski/nestjs-seed/badge.svg?branch=master)](https://coveralls.io/github/CiroStodulski/nestjs-seed?branch=master)
+![Coverage Status](https://coveralls.io/repos/github/somosphi/nestjs-seed/badge.svg?branch=master)
 
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo_text.svg" width="320" alt="Nest Logo" /></a>
