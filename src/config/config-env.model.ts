@@ -7,9 +7,10 @@ import {
   IsEnum,
 } from 'class-validator';
 
-enum NodeEnv {
+export enum NodeEnv {
   Development = 'development',
   Production = 'production',
+  Test = 'test',
 }
 
 export class ConfigEnv {

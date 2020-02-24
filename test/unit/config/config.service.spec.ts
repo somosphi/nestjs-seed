@@ -4,36 +4,20 @@ import { ConfigService } from 'src/config/config.service';
 import { ConfigEnv } from 'src/config/config-env.model';
 
 describe('ConfigService', () => {
-  const defaultEnv = {
-    NODE_ENV: 'development',
-    JSONPLACEHOLDER_URL: 'http://localhost.com/jsonplaceholder-test',
-    JSONPLACEHOLDER_TIMEOUT: '300',
-    TYPEORM_CONNECTION: 'mysql',
-    TYPEORM_HOST: 'localhost',
-    TYPEORM_PORT: '33O6',
-    TYPEORM_DATABASE: 'seed_nest',
-    TYPEORM_USERNAME: 'root',
-    TYPEORM_PASSWORD: '',
-    APM_SERVICE_NAME: 'opa',
-    APM_SERVICE_URL: 'localhost',
-  };
+  const defaultEnv = { ...process.env };
 
-  const initService = async (config: any): Promise<ConfigService> => {
-    class ConfigServiceTestable extends ConfigService {
-      protected readEnv(filepath: string) {
-        return config;
-      }
-    }
+  afterEach(() => {
+    process.env = { ...defaultEnv };
+  });
 
+  const initService = async (config: any = {}): Promise<ConfigService> => {
+    process.env = {
+      ...defaultEnv,
+      ...config,
+    };
     const module: TestingModule = await Test.createTestingModule({
-      providers: [
-        {
-          provide: ConfigService,
-          useValue: new ConfigServiceTestable('.env'),
-        },
-      ],
+      providers: [ConfigService],
     }).compile();
-
     return module.get<ConfigService>(ConfigService);
   };
 
@@ -43,8 +27,8 @@ describe('ConfigService', () => {
 
   it('should set formatted env in envConfig property', async () => {
     const service = await initService(defaultEnv);
-
     const result = new ConfigEnv();
+    result.httpPort = parseInt(defaultEnv.HTTP_PORT, 10);
     result.nodeEnv = defaultEnv.NODE_ENV;
     result.jsonplaceholderTimeout = parseInt(
       defaultEnv.JSONPLACEHOLDER_TIMEOUT,

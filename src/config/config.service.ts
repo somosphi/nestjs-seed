@@ -1,8 +1,7 @@
 import { Injectable, Logger, OnModuleInit } from '@nestjs/common';
-import * as fs from 'fs';
 import * as dotenv from 'dotenv';
 import { validateSync } from 'class-validator';
-import { ConfigEnv } from './config-env.model';
+import { ConfigEnv, NodeEnv } from './config-env.model';
 
 @Injectable()
 export class ConfigService implements OnModuleInit {
@@ -10,17 +9,22 @@ export class ConfigService implements OnModuleInit {
 
   readonly envConfig: ConfigEnv;
 
-  constructor(filePath: string) {
-    this.envConfig = this.validateInput(this.readEnv(filePath));
+  constructor() {
+    if (process.env.NODE_ENV !== NodeEnv.Test) {
+      dotenv.config();
+    }
+    try {
+      this.envConfig = this.validateInput(process.env);
+    } catch (err) {
+      this.logger.error(err.toString());
+      throw err;
+    }
   }
 
   onModuleInit() {
     this.logger.log('Env config initialized successfully');
   }
 
-  protected readEnv(filePath: string): Required<ConfigEnv> {
-    return dotenv.parse(fs.readFileSync(filePath)) as any;
-  }
 
   protected initEnvConfig(config: any): ConfigEnv {
     const envConfig = new ConfigEnv();
