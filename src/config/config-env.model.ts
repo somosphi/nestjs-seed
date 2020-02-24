@@ -13,6 +13,10 @@ enum NodeEnv {
 }
 
 export class ConfigEnv {
+  @IsNumber()
+  @IsPositive()
+  httpPort: number;
+
   @IsString()
   @IsEnum(NodeEnv)
   nodeEnv: string;
