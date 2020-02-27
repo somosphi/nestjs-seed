@@ -1,6 +1,5 @@
 import { ApmService } from 'src/apm/apm.service';
 import { TestingModule, Test } from '@nestjs/testing';
-import { HttpService, HttpModule } from '@nestjs/common';
 import { ConfigModule } from 'src/config/config.module';
 import elasticApmNode from 'elastic-apm-node';
 
@@ -23,6 +22,9 @@ describe('ApmService', () => {
   describe('#onModuleInit', () => {
     it('should not started elasticApmNode when dont exist config', async () => {
       jest.spyOn(elasticApmNode, 'start').mockImplementation(() => undefined);
+
+      service.configService.envConfig.apmServiceName = '';
+      service.configService.envConfig.apmServiceUrl = '';
 
       service.onModuleInit();
 
