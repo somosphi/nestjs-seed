@@ -1,0 +1,21 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: "$CI_PROJECT_NAME"
+  namespace: "$PROJECT_NAMESPACE-$CI_COMMIT_REF_NAME"
+spec:
+  hosts:
+  - "$ISTIO_VIRTUAL_SERVICE"
+  gateways:
+  - default-ingress.istio-system
+  http:
+  - match:
+    - uri:
+        prefix: "/$CI_PROJECT_NAME/"
+    rewrite:
+        uri: "/"
+    route:
+    - destination:
+        host: "$CI_PROJECT_NAME"
+        port:
+          number: $SERVICEPORT

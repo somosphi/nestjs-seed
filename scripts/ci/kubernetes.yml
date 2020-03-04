@@ -1,0 +1,95 @@
+# Develop
+docker-develop: &DOCKER
+  stage: build
+  variables:
+    ISTIO_VIRTUAL_SERVICE: ${DOMAIN_DEVELOP}
+    ECR: ${ECR_DEVELOP}
+  image: 011855232551.dkr.ecr.us-east-1.amazonaws.com/phi/infrastructure/node:latest
+  before_script:
+    - cp -r /root/deployment .
+  script:
+    - cat package.json | grep version |cut -d ":" -f2|sed "s/\"//g"|sed "s/ //g"|cut -d "," -f1 > ./deployment/APP_VERSION
+    - npm install && npm install -g ts-node
+    - node ./scripts/shell/build-deployment.js
+    - cp ./Dockerfile ./deployment
+  artifacts:
+    name: "$CI_JOB_NAME"
+    expire_in: 15min
+    paths:
+      - ./deployment
+  only:
+    - develop
+
+build-lib:
+  stage: build
+  image: node:12-alpine
+  script:
+    - npm install
+    - npm run build
+  artifacts:
+    name: "$CI_JOB_NAME"
+    expire_in: 15min
+    paths:
+      - ./lib
+  only:
+    - develop
+    - master
+
+pushing-develop: &PUSHING
+  stage: publish
+  image: 011855232551.dkr.ecr.us-east-1.amazonaws.com/fintech/phi/runner/docker-4all:v2
+  variables:
+    ECR: ${ECR_DEVELOP}
+  before_script:
+    - chmod u+x ./deployment/script-push-image.sh
+  script:
+    - export APP_VERSION=$(cat ./deployment/APP_VERSION)
+    - ./deployment/script-push-image.sh
+  dependencies:
+    - docker-develop
+    - build-lib
+  only:
+    - develop
+
+kubernetes-develop: &KUBERNETES
+  stage: deploy
+  image: 011855232551.dkr.ecr.us-east-1.amazonaws.com/fintech/phi/runner/ubuntu-deploy:v1
+  variables:
+    CLUSTER_NAME: ${CLUSTER_DEVELOP}
+  before_script:
+    - chmod u+x ./deployment/script-git-push.sh
+  script:
+    - ./deployment/script-git-push.sh
+  dependencies:
+    - docker-develop
+  only:
+    - develop
+
+# Master
+docker-master:
+  <<: *DOCKER
+  variables:
+    ISTIO_VIRTUAL_SERVICE: ${DOMAIN_MASTER}
+    ECR: ${ECR_PRODUCTION}
+  only:
+    - master
+
+pushing-master:
+  <<: *PUSHING
+  image: 011855232551.dkr.ecr.us-east-1.amazonaws.com/fintech/phi/runner/docker-4all-pd:v1
+  variables:
+    ECR: ${ECR_PRODUCTION}
+  dependencies:
+    - docker-master
+    - build-lib
+  only:
+    - master
+
+kubernetes-master:
+  <<: *KUBERNETES
+  variables:
+    CLUSTER_NAME: ${CLUSTER_PRODUCTION}
+  dependencies:
+    - docker-master
+  only:
+    - master

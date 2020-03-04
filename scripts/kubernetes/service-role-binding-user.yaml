@@ -1,0 +1,12 @@
+apiVersion: rbac.istio.io/v1alpha1
+kind: ServiceRoleBinding
+metadata:
+  name: "$CI_PROJECT_NAME-user"
+  namespace: "$PROJECT_NAMESPACE-$CI_COMMIT_REF_NAME"
+spec:
+  roleRef:
+    kind: ServiceRole
+    name: "$CI_PROJECT_NAME-user"
+  subjects:
+  - properties:
+      request.auth.claims[roles]: "$CI_PROJECT_NAME-user"
