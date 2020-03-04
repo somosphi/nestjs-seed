@@ -21,4 +21,4 @@ jobs:
       run: |
         npm install
         npm run build --if-present
-        npm run coveralls
+        npm run coveralls --exit
