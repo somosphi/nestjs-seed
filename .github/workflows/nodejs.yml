@@ -17,26 +17,8 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-      env:
-        COVERALLS_REPO_TOKEN: "${{ secrets.COVERALLS_TOKEN }}"
-        COVERALLS_GIT_BRANCH: "${{ github.ref }}"
-        JSONPLACEHOLDER_URL: https://jsonplaceholder.typicode.com
-        JSONPLACEHOLDER_TIMEOUT: 5000
-        NODE_ENV: development
-        TYPEORM_CONNECTION: mysql
-        TYPEORM_USERNAME: root
-        TYPEORM_PASSWORD:
-        TYPEORM_HOST: localhost 
-        TYPEORM_PORT: 3306
-        TYPEORM_DATABASE: nestjs_seed
-        TYPEORM_MIGRATIONS: migration\*.ts
-        TYPEORM_MIGRATIONS_DIR: migration
-        APM_SERVICE_NAME: 
-        APM_SERVICE_URL:
-        CI: true
     - name: npm install, build, and test
       run: |
         npm ci
-        echo -e "" >> .env
         npm run build --if-present
         npm run coveralls
