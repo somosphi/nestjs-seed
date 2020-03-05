@@ -1,0 +1,10 @@
+apiVersion: rbac.istio.io/v1alpha1
+kind: ServiceRole
+metadata:
+  name: "$CI_PROJECT_NAME-user"
+  namespace: "$PROJECT_NAMESPACE-$CI_COMMIT_REF_NAME"
+spec:
+  rules:
+  - services: ["$CI_PROJECT_NAME.$PROJECT_NAMESPACE-$CI_COMMIT_REF_NAME.svc.cluster.local"]
+    methods: ["*"]
+    paths: ["/v1/*"]

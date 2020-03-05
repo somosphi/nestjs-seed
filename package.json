@@ -21,7 +21,7 @@
     "migration:create": "ts-node node_modules/.bin/typeorm migration:create -n",
     "migration:run": "ts-node node_modules/.bin/typeorm migration:run",
     "migration:revert": "ts-node node_modules/.bin/typeorm migration:revert",
-    "coveralls": "jest --coverage  && cat ./coverage/lcov.info | coveralls"
+    "coveralls": "jest --coverage --detectOpenHandles --forceExit"
   },
   "dependencies": {
     "@nestjs/common": "^6.7.2",
@@ -68,6 +68,7 @@
     "typescript": "^3.6.3"
   },
   "jest": {
+    "globalSetup": "./test/unit/setup.ts",
     "modulePaths": [
       "../../",
       "<rootDir>"

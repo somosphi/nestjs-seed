@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: "$CI_PROJECT_NAME"
+  namespace: "$PROJECT_NAMESPACE-$CI_COMMIT_REF_NAME"
+  labels:
+    app: "$CI_PROJECT_NAME"
+    service: "$CI_PROJECT_NAME"
+spec:
+  ports:
+  - port: $SERVICEPORT
+    name: http
+  selector:
+    app: "$CI_PROJECT_NAME"

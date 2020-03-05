@@ -1,0 +1,24 @@
+image: somosphi/node:latest
+
+stages:
+  - test
+  - sonarqube
+  - build
+  - publish
+  - deploy
+ 
+documentation:
+  stage: publish
+  variables:
+    AWS_DEFAULT_REGION: $AWS_DOCUMENTATION_REGION
+    AWS_ACCESS_KEY_ID: $AWS_DOCUMENTATION_ACCESS_KEY_ID
+    AWS_SECRET_ACCESS_KEY: $AWS_DOCUMENTATION_SECRET_ACCESS_KEY
+  script:
+    - aws s3 rm $AWS_DOCUMENTATION_ENV_DNS --recursive
+    - aws s3 cp ./docs/ $AWS_DOCUMENTATION_ENV_DNS --recursive
+  only:
+    - develop
+
+include:
+  - local: '/scripts/ci/test.yml'
+  - local: '/scripts/ci/kubernetes.yml'
