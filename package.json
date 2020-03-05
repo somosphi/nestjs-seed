@@ -21,8 +21,8 @@
     "migration:create": "ts-node node_modules/.bin/typeorm migration:create -n",
     "migration:run": "ts-node node_modules/.bin/typeorm migration:run",
     "migration:revert": "ts-node node_modules/.bin/typeorm migration:revert",
-    "coveralls": "jest --coverage --detectOpenHandles --forceExit"
-  },
+    "coveralls": "jest --coverage --forceExit --detectOpenHandles"
+    },
   "dependencies": {
     "@nestjs/common": "^6.7.2",
     "@nestjs/core": "^6.7.2",
@@ -83,7 +83,7 @@
     "transform": {
       "^.+\\.(t|j)s$": "ts-jest"
     },
-    "coverageDirectory": "../coverage",
+    "coverageDirectory": "./coverage",
     "testEnvironment": "node"
   }
 }

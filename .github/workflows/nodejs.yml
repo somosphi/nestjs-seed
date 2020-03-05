@@ -7,15 +7,35 @@ jobs:
     runs-on: ubuntu-18.04
     strategy:
       matrix:
-        node: [ '10', '8' ]
+        node: [ '12', '10' ]
     name: Node ${{ matrix.node }} sample
     steps:
-      - uses: actions/checkout@v2
+      - name: Clone repository
+        uses: actions/checkout@v2
+      
       - name: Setup node
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node }}
-      - run: npm install
-      - run: npm run build --if-present
-      - run: npm run coveralls
-       
+      
+      - name: Install npm dependencies
+        run: npm install
+      
+      - name: Build
+        run: npm run build
+      
+      - name: Run tests
+        run: npm run coveralls
+        
+      - name: Coveralls Parallel
+        uses: coverallsapp/github-action@master
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          parallel: true
+          path-to-lcov: ./coverage/lcov.info # optional (default value)
+
+      - name: Coveralls Finished
+        uses: coverallsapp/github-action@master
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          parallel-finished: true
