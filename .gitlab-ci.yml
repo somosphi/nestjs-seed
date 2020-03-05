@@ -17,7 +17,7 @@ documentation:
     - aws s3 rm $AWS_DOCUMENTATION_ENV_DNS --recursive
     - aws s3 cp ./docs/ $AWS_DOCUMENTATION_ENV_DNS --recursive
   only:
-    - develop2
+    - develop
 
 include:
   - local: '/scripts/ci/test.yml'
